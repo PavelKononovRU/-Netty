@@ -1,4 +1,54 @@
+server:
+  port: 8080
+
 eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    registerWithEureka: true
+    fetchRegistry: true
   instance:
     preferIpAddress: true
     lease-renewal-interval-in-seconds: 30
+
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          my-keycloak-provider:
+            issuer-uri: http://localhost:8890/realms/project-realm
+        registration:
+          keycloak-spring-gateway-client:
+            provider: my-keycloak-provider
+            scope: openid
+            client-id: gateway-client
+            client-secret: aQ3VGHPPV9jFLMdUwFJiWuoMKvfy71BJ
+            authorization-grant-type: password
+            redirect-uri: http://localhost:8080/login/oauth2/code/gateway-client
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          web: DEBUG
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - bindings
+          - "*"
