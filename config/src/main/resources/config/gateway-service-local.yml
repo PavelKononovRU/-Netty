@@ -23,7 +23,7 @@ spring:
             provider: my-keycloak-provider
             scope: openid
             client-id: gateway-client
-            client-secret: aQ3VGHPPV9jFLMdUwFJiWuoMKvfy71BJ
+            client-secret: AoUTcVl7jCve5efR8oSTySx1jIfBmFUl
             authorization-grant-type: password
             redirect-uri: http://localhost:8080/login/oauth2/code/gateway-client
   cloud:
