@@ -61,11 +61,6 @@
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
-            <version>3.1.1</version>
-        </dependency>
         <!--Зависимости Caffeine-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -96,6 +91,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
             </plugin>
         </plugins>
     </build>

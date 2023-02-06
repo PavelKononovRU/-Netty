@@ -2,9 +2,7 @@ package com.example.gatewayservice.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -62,9 +60,7 @@ public class SecurityConfig {
         return oidcLogoutSuccessHandler;
     }
 
-    /*
-    * ИНИЦИАЛИЗАЦИЯ бинов КЭШа  Caffeine
-    * */
+
     @Bean
     public Caffeine<Object,Object> caffeineConfig() {
         return Caffeine.newBuilder().expireAfterWrite(120, TimeUnit.MINUTES);
