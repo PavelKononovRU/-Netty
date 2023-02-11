@@ -1,5 +1,5 @@
 server:
-  port: 8088
+  port: 8080
 
 eureka:
   client:
@@ -15,24 +15,39 @@ spring:
   security:
     oauth2:
       client:
-        provider:
-          my-keycloak-provider:
-            issuer-uri: http://localhost:8890/realms/project-realm
-        registration:
-          keycloak-spring-gateway-client:
-            provider: my-keycloak-provider
-            scope: openid
-            client-id: gateway-client
-            client-secret: Gyo45aIz0hUFYz2pgN3uwevEVvUDvOhT
-            authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/login/oauth2/code/gateway-client
+        #возможно свойство gateway нужно будет удалить
+        gateway:
+          #provider:
+            #keycloak:
+              #issuer-uri: http://server:8890/realms/project-realm
+          registration:
+            keycloak-spring-gateway-client:
+              provider: keycloak
+              scope: openid
+              client-id: gateway-client
+              client-secret: Gyo45aIz0hUFYz2pgN3uwevEVvUDvOhT
+              authorization-grant-type: authorization_code
+              redirect-uri: http://gateway-client:8080
+                            http://gateway-service:8080/api/user/home
+                            http://gateway-service:8080/login/oauth2/code/gateway-client
+                            http://localhost:8080/api/user/home
+                            http://localhost:8080/login/oauth2/code/gateway-client
+          provider:
+            keycloak:
+              #token-uri: http://localhost:8890/realms/project-realm/protocol/openid-connect/token
+              #authorization_uri: http://localhost:8890/realms/project-realm/protocol/openid-connect/auth
+              #jwks_uri: http://localhost:8890/realms/project-realm/protocol/openid-connect/certs
+              #userinfo_uri: http://localhost:8890/realms/project-realm/protocol/openid-connect/userinfo
+              #Заменить и посмотреть на "i"
+              issuer-uri: http://keycloak:8890/realms/project-realm #Изменил на i
   cloud:
     gateway:
       default-filters:
         - TokenRelay
-      discovery.locator:
-        enabled: true
-        lowerCaseServiceId: true
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
 
 logging:
   level:
@@ -48,4 +63,6 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include:
+          - bindings
+          - "*"
