@@ -25,11 +25,11 @@ spring:
             provider: keycloak
             scope: openid
             client-id: gateway-client
-            client-secret: NQoBBmgMWZgOxaBZU0ZVcAnV2WuwbcrN
+            client-secret: Gyo45aIz0hUFYz2pgN3uwevEVvUDvOhT
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/*
-              http://localhost:8080/api/user/home
-              http://localhost:8080/login/oauth2/code/gateway-client
+            redirect-uri: http://localhost:8080/login/oauth2/code/gateway-client
+                          #http://localhost:8080/paying-service
+                          #http://localhost:8080/login/oauth2/code/gateway-client
         provider:
           keycloak:
             token-uri: http://localhost:8890/realms/project-realm/protocol/openid-connect/token
