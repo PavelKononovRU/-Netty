@@ -38,11 +38,11 @@ public class SecurityConfig {
                     .anyExchange()
                     .authenticated()
                 .and()
-                .oauth2Login()
-                .authenticationSuccessHandler(successHandler)
+                    .oauth2Login()
+                    //.authenticationSuccessHandler(successHandler)
                 .and()
-                .logout()
-                .logoutSuccessHandler(handler);
+                    .logout();
+                    //.logoutSuccessHandler(handler);
 
         return http.build();
     }

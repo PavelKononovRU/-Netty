@@ -27,8 +27,8 @@ spring:
             client-id: gateway-client
             client-secret: Gyo45aIz0hUFYz2pgN3uwevEVvUDvOhT
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/login/oauth2/code/gateway-client
-                          #http://localhost:8080/paying-service
+            redirect-uri: "http://localhost:8080/login/oauth2/code/gateway-client"
+
                           #http://localhost:8080/login/oauth2/code/gateway-client
         provider:
           keycloak:
