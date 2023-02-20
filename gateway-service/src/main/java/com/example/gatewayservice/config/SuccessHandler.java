@@ -14,7 +14,7 @@ import java.net.URI;
 @Component
 public class SuccessHandler implements ServerAuthenticationSuccessHandler {
 
-    private final URI location = URI.create("http://localhost:8080/*");
+    private final URI location = URI.create("http://localhost:8081/api/user/home");
     private final ServerRedirectStrategy redirectStrategy = new DefaultServerRedirectStrategy();
 
     @Override

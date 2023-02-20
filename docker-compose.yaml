@@ -29,6 +29,22 @@ services:
       - spring.main.allow-bean-definition-overriding=true
       - spring.main.web-application-type=reactive
       - debug=true
+      #keycloak
+      #- spring.security.oauth2.client.registration.keycloak-spring-gateway-client.provider=keycloak
+      #- spring.security.oauth2.client.registration.keycloak-spring-gateway-client.client_id=gateway-client
+      #- spring.security.oauth2.client.registration.keycloak-spring-gateway-client.client_secret=Gyo45aIz0hUFYz2pgN3uwevEVvUDvOhT
+     # - spring.security.oauth2.client.registration.keycloak-spring-gateway-client.client-authentication-method=POST
+     # - spring.security.oauth2.client.registration.keycloak-spring-gateway-client.authorization-grant-type=authorization_code
+     # - spring.security.oauth2.client.registration.keycloak-spring-gateway-client.scope=openid
+     # - spring.security.oauth2.client.registration.keycloak-spring-gateway-client.redirect-uri=http://localhost:8081/login/oauth2/code/gateway-client
+
+        #keycloak provider
+      #- spring.security.oauth2.client.provider.keycloak.token-uri=http://localhost:8890/realms/project-realm/protocol/openid-connect/token
+     # - spring.security.oauth2.client.provider.keycloak.authorization-uri=http://localhost:8890/realms/project-realm/protocol/openid-connect/auth
+     # - spring.security.oauth2.client.provider.keycloak.jwk-set-uri=http://localhost:8890/realms/project-realm/protocol/openid-connect/certs
+      #- spring.security.oauth2.client.provider.keycloak.user-info_uri=http://localhost:8890/realms/project-realm/protocol/openid-connect/userinfo
+      #- spring.security.oauth2.client.provider.keycloak.issuer-url=http://localhost:8890/realms/project-realm
+
     depends_on:
       config:
         condition:
@@ -37,7 +53,7 @@ services:
         condition:
           service_healthy
     ports:
-      - 8080:8080
+      - 8081:8081
   postgres:
     image: postgres
     environment:
@@ -89,7 +105,9 @@ services:
      SPRING_APPLICATION_NAME: "paying-service"
      SPRING_CLOUD_CONFIG_URI: http://config:8888
      SPRING_CLOUD_CONFIG_PROFILE: "dev"
+     SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://localhost:8890/realms/project-realm/protocol/openid-connect/certs
     depends_on:
+      - config
       - gateway-service
       - postgres
   stub-payment:
@@ -133,12 +151,12 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
-      - "8890:8080"
+      - 8890:8080
     depends_on:
       postgres_keycloak:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://keycloak:8080/realms/master"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/realms/master"]
       interval: 30s
       timeout: 10s
       retries: 10
